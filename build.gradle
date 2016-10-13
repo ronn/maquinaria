@@ -22,7 +22,8 @@ dependencies {
     compile files('lib/ojdbc-7.jar')
     // https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-core-asl
     compile group: 'org.codehaus.jackson', name: 'jackson-core-asl', version: '1.9.13'
-
+    // https://mvnrepository.com/artifact/com.github.jsimone/webapp-runner
+    compile group: 'com.github.jsimone', name: 'webapp-runner', version: '8.5.5.0'
 }
 
 task stage {
