@@ -3,7 +3,6 @@
 *.iml
 *.ipr
 *.iws
-*.ids
 bin/
 *build/
 *generated/
@@ -13,12 +12,9 @@ bin/
 .project
 .directory/
 .idea/
-.classes/
-build.gradle
-gradle.properties
-gradle
+out/
+gradle/
 gradlew
 gradlew.bat
-out/
-/.nb-gradle/
 classes/
+.directory
