@@ -6,6 +6,6 @@ import javax.ws.rs.core.Application;
 /**
  * Created by ronnie on 18/09/16.
  */
-@ApplicationPath("/api")
+//@ApplicationPath("/")
 public class MainRestController extends Application{
 }
