@@ -6,6 +6,7 @@ import org.skife.jdbi.v2.DBI;
 import utiliy.Conexion;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by ronnie on 4/10/16.
@@ -15,10 +16,10 @@ public class MaquinariaRepository {
     MaquinariaDao dao;
     DBI dbi = Conexion.get();
 
-    public Maquinaria findById(Integer id){
+    public Optional<Maquinaria> getById(Integer id){
         dao = dbi.onDemand(MaquinariaDao.class);
         System.out.print(id);
-        return dao.findById(id);
+        return dao.getById(id).stream().findFirst();
     }
 
     public List<Maquinaria> getAll(){
@@ -26,18 +27,17 @@ public class MaquinariaRepository {
         return dao.getAll();
     }
 
-    public void insertMaquinaria (Maquinaria maquinaria){
+    public void save (Maquinaria maquinaria){
         dao = dbi.onDemand(MaquinariaDao.class);
-        System.out.print(maquinaria.getIdManipulador());
         dao.insert(maquinaria);
     }
 
-    public void updateMaquinaria(Maquinaria maquinaria){
+    public void update(Maquinaria maquinaria){
         dao = dbi.onDemand(MaquinariaDao.class);
         dao.update(maquinaria);
     }
 
-    public void deleteMaquinaria(Integer id){
+    public void delete(Integer id){
         dao = dbi.onDemand(MaquinariaDao.class);
         dao.delete(id);
     }

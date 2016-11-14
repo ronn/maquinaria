@@ -1,52 +1,55 @@
 package controller;
 
 import db.MaquinariaRepository;
+import io.vertx.core.json.Json;
+import io.vertx.ext.web.RoutingContext;
 import model.entity.Maquinaria;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.Optional;
 
-/**
- * Created by ronnie on 18/09/16.
- */
-@Path("/maquinaria")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
 public class MaquinariaController {
 
     MaquinariaRepository repo = new MaquinariaRepository();
 
-    @GET
-    public List<Maquinaria> getSaludo(){
-        return repo.getAll();
+    public void getAll(RoutingContext rc){
+        List<Maquinaria> list =  repo.getAll();
+
+        if (list.size() > 0){
+            rc.response().end(Json.encodePrettily(repo.getAll()));
+        }else {
+            rc.response().setStatusCode(204).end();
+        }
     }
 
-    @GET
-    @Path("/{id}")
-    public Maquinaria find(@PathParam("id") Integer id){
-        return repo.findById(id);
+    public void getById(RoutingContext rc){
+        Integer id = Integer.valueOf(rc.request().getParam("id"));
+        Optional<Maquinaria> m = repo.getById(id);
+
+        if(m.isPresent()){
+            rc.response().end(Json.encodePrettily(m.get()));
+        }else {
+            rc.response().setStatusCode(204).end();
+        }
     }
 
-    @POST
-    public Response save(Maquinaria maquinaria){
-        repo.insertMaquinaria(maquinaria);
-        return Response.status(Response.Status.CREATED).build();
+    public void save(RoutingContext rc){
+        Maquinaria m = Json.decodeValue(rc.getBodyAsString(), Maquinaria.class);
+        repo.save(m);
+        rc.response().setStatusCode(201).end("La maquina se guardó con éxito!");
     }
 
-    @PUT
-    @Path("/{id}")
-    public Response update(@PathParam("id") Integer id, Maquinaria maquinaria){
-        maquinaria.setId(id);
-        repo.updateMaquinaria(maquinaria);
-        return Response.ok().build();
+    public void update(RoutingContext rc){
+        Integer id = Integer.valueOf(rc.request().getParam("id"));
+        Maquinaria m = Json.decodeValue(rc.getBodyAsString(), Maquinaria.class);
+        m.setId(id);
+        repo.update(m);
+        rc.response().end("La máquina se actualizó con éxito!");
     }
 
-    @DELETE
-    @Path("/{id}")
-    public Response delete(@PathParam("id") Integer id){
-        repo.deleteMaquinaria(id);
-        return Response.status(Response.Status.OK).build();
+    public void delete(RoutingContext rc){
+        Integer id = Integer.valueOf(rc.request().getParam("id"));
+        repo.delete(id);
+        rc.response().end("La máquina se eliminó con éxito!");
     }
 }

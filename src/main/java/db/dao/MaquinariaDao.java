@@ -6,6 +6,7 @@ import org.skife.jdbi.v2.sqlobject.BindBean;
 import org.skife.jdbi.v2.sqlobject.SqlQuery;
 import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
+import utiliy.DBSentences;
 
 import java.util.List;
 
@@ -15,34 +16,18 @@ import java.util.List;
 @RegisterMapper(MaquinariaMapper.class)
 public interface MaquinariaDao {
 
-    @SqlQuery("SELECT * FROM MAQUINARIA WHERE ID_MAQUINARIA = :id")
-    Maquinaria findById(@Bind("id") Integer id);
-
-    @SqlQuery("SELECT * FROM MAQUINARIA")
+    @SqlQuery(DBSentences.sqlGetAll)
     List<Maquinaria> getAll();
 
-    @SqlUpdate("INSERT INTO MAQUINARIA (" +
-            "ID_TIPO,"          +
-            "ID_PROVEEDOR, "    +
-            "NOMBRE, "          +
-            "ESTADO, "          +
-            "ID_MANIPULADOR) "  +
-            "VALUES("           +
-            ":m.idTipo, "       +
-            ":m.idProveedor, "  +
-            ":m.nombre, "       +
-            ":m.estado, "       +
-            ":m.idManipulador)")
+    @SqlQuery(DBSentences.sqlGetById)
+    List<Maquinaria> getById(@Bind("id") Integer id);
+
+    @SqlUpdate(DBSentences.sqlInsert)
     void insert(@BindBean("m") Maquinaria maquinaria);
 
-    @SqlUpdate("UPDATE MAQUINARIA SET "         +
-            "ID_PROVEEDOR = :m.idProveedor, "   +
-            "NOMBRE = :m.nombre, "              +
-            "ESTADO = :m.estado, "              +
-            "ID_MANIPULADOR = :m.idManipulador "+
-            "WHERE ID_MAQUINARIA = :m.id")
+    @SqlUpdate(DBSentences.sqlUpdate)
     void update(@BindBean("m") Maquinaria maquinaria);
 
-    @SqlUpdate("DELETE FROM MAQUINARIA WHERE ID_MAQUINARIA = :id")
+    @SqlUpdate(DBSentences.sqlDelete)
     void delete(@Bind("id") Integer id);
 }

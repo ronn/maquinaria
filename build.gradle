@@ -1,9 +1,21 @@
 group 'com.ronnie'
 version '1.0-SNAPSHOT'
 
+group 'com.ronnie'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.4'
+    }
+}
+
 apply plugin: 'java'
 apply plugin: 'application'
-mainClassName = 'MaquinariaServer'
+apply plugin: 'com.github.johnrengelman.shadow'
 
 jar{
     manifest{
@@ -21,23 +33,29 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
 
-    // https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
-    compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
-
-    runtime group: 'org.glassfish.jersey.core', name: 'jersey-server', version: '2.24'
-    compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-jetty-http', version: '2.24'
-    compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet-core', version: '2.24'
-    compile group: 'org.glassfish.jersey.media', name: 'jersey-media-moxy', version: '2.23.2'
-
     compile group: 'org.jdbi', name: 'jdbi', version: '2.77'
 
     compile files('lib/ojdbc-7.jar')
 
-    compile group: 'org.codehaus.jackson', name: 'jackson-core-asl', version: '1.9.13'
+    // https://mvnrepository.com/artifact/io.vertx/vertx-core
+    compile group: 'io.vertx', name: 'vertx-core', version: '3.3.3'
+    compile 'io.vertx:vertx-web:3.3.3'
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.21'
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-nop
+    compile group: 'org.slf4j', name: 'slf4j-nop', version: '1.7.21'
+}
 
-    compile group: 'org.eclipse.jetty', name: 'jetty-server', version: '9.3.13.v20161014'
-    compile group: 'org.eclipse.jetty', name: 'jetty-servlet', version: '9.3.13.v20161014'
+def mainVerticle = 'App'
 
-    // https://mvnrepository.com/artifact/javax.servlet/servlet-api
-    compile group: 'javax.servlet', name: 'servlet-api', version: '2.5'
+mainClassName = "io.vertx.core.Starter"
+run {
+    args = ["run", mainVerticle]
+}
+
+jar{
+    manifest{
+        attributes 'Class-Path': 'lib/ojdbc-7.jar',
+                'Main-Verticle': mainVerticle
+    }
 }
