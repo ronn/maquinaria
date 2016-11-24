@@ -11,8 +11,8 @@ import java.sql.SQLException;
 public class Conexion {
 
     private static final String HOST = "jdbc:oracle:thin:@localhost:1521:XE";
-    private static final String USER = "RonnieDaveBDII";
-    private static final String PASS = "7098";
+    private static final String USER = "RonnieBrick";
+    private static final String PASS = "321654";
 
     public static DBI get() {
         OracleDataSource ds = null;

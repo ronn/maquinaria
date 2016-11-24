@@ -18,7 +18,6 @@ public class MaquinariaRepository {
 
     public Optional<Maquinaria> getById(Integer id){
         dao = dbi.onDemand(MaquinariaDao.class);
-        System.out.print(id);
         return dao.getById(id).stream().findFirst();
     }
 
@@ -27,9 +26,9 @@ public class MaquinariaRepository {
         return dao.getAll();
     }
 
-    public void save (Maquinaria maquinaria){
+    public int save (Maquinaria maquinaria){
         dao = dbi.onDemand(MaquinariaDao.class);
-        dao.insert(maquinaria);
+        return dao.insert(maquinaria);
     }
 
     public void update(Maquinaria maquinaria){

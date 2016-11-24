@@ -45,6 +45,7 @@ public class App extends AbstractVerticle{
     }
 
     public void handleError(RoutingContext rc){
+        rc.failure().printStackTrace();
         int sc = rc.statusCode();
         if (sc > 0){
             if (400 >= sc && sc < 500){
@@ -57,8 +58,6 @@ public class App extends AbstractVerticle{
                         .end("Error interno al tratar de procesar la solicitud... Intenta más tarde");
             }
         }else {
-            rc.failure().printStackTrace();
-            System.out.println("Status code: " + sc);
             rc.response()
                     .setStatusCode(500).end("Ha ocurrido un error inesperado");
         }

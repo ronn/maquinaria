@@ -35,8 +35,12 @@ public class MaquinariaController {
 
     public void save(RoutingContext rc){
         Maquinaria m = Json.decodeValue(rc.getBodyAsString(), Maquinaria.class);
-        repo.save(m);
-        rc.response().setStatusCode(201).end("La maquina se guardó con éxito!");
+        int res = repo.save(m);
+         if (res == 1){
+             rc.response().setStatusCode(201).end("La maquina se guardó con éxito!");
+         }else {
+             rc.fail(500);
+         }
     }
 
     public void update(RoutingContext rc){
