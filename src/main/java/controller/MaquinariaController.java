@@ -35,20 +35,29 @@ public class MaquinariaController {
 
     public void save(RoutingContext rc){
         Maquinaria m = Json.decodeValue(rc.getBodyAsString(), Maquinaria.class);
-        int res = repo.save(m);
-         if (res == 1){
-             rc.response().setStatusCode(201).end("La maquina se guardó con éxito!");
-         }else {
-             rc.fail(500);
-         }
+
+        eraseConditionalFields(m);
+
+        repo.save(m);
+        rc.response().setStatusCode(201).end("La maquina se guardó con éxito!");
     }
 
     public void update(RoutingContext rc){
         Integer id = Integer.valueOf(rc.request().getParam("id"));
         Maquinaria m = Json.decodeValue(rc.getBodyAsString(), Maquinaria.class);
         m.setId(id);
+
+        eraseConditionalFields(m);
+
         repo.update(m);
         rc.response().end("La máquina se actualizó con éxito!");
+    }
+
+    private void eraseConditionalFields(Maquinaria m) {
+        if ("Disponible".equals(m.getEstado())){
+            m.setIdManipulador(null);
+            m.setIdObra(null);
+        }
     }
 
     public void delete(RoutingContext rc){

@@ -13,6 +13,14 @@ import java.sql.SQLException;
 public class MaquinariaMapper implements ResultSetMapper<Maquinaria> {
     @Override
     public Maquinaria map(int index, ResultSet r, StatementContext ctx) throws SQLException {
-        return new Maquinaria(r.getInt("ID_MAQUINARIA"), r.getInt("ID_TIPO"), r.getInt("ID_PROVEEDOR"), r.getString("NOMBRE"), r.getString("ESTADO"), r.getInt("ID_MANIPULADOR"));
+        return new Maquinaria(
+                r.getInt("ID_MAQUINARIA"),
+                r.getInt("ID_TIPO"),
+                r.getInt("ID_PROVEEDOR"),
+                r.getString("NOMBRE"),
+                r.getString("ESTADO"),
+                r.getInt("ID_MANIPULADOR"),
+                r.getInt("ID_OBRA")
+        );
     }
 }

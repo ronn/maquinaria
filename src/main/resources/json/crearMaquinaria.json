@@ -1,7 +1,8 @@
 {
+  "id": 654,
   "idTipo" : 1,
   "idProveedor" : 2,
-  "nombre" : "Roberta",
+  "nombre" : "Alonsito",
   "estado" : "Ocupado",
   "idManipulador" : 1
 }

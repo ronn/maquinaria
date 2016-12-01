@@ -26,9 +26,9 @@ public class MaquinariaRepository {
         return dao.getAll();
     }
 
-    public int save (Maquinaria maquinaria){
+    public void save (Maquinaria maquinaria){
         dao = dbi.onDemand(MaquinariaDao.class);
-        return dao.insert(maquinaria);
+        dao.insert(maquinaria);
     }
 
     public void update(Maquinaria maquinaria){
