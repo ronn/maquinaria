@@ -1,4 +1,4 @@
-package utiliy;
+package utility;
 
 import oracle.jdbc.pool.OracleDataSource;
 import org.skife.jdbi.v2.DBI;

@@ -1,6 +1,7 @@
 package db.dao;
 
 import model.entity.Maquinaria;
+import org.skife.jdbi.v2.exceptions.UnableToExecuteStatementException;
 import org.skife.jdbi.v2.sqlobject.Bind;
 import org.skife.jdbi.v2.sqlobject.BindBean;
 import org.skife.jdbi.v2.sqlobject.SqlCall;
@@ -9,7 +10,7 @@ import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 
 import java.util.List;
 
-import static utiliy.DBSentences.*;
+import static utility.DBSentences.*;
 
 /**
  * Created by ronnie on 4/10/16.
@@ -24,7 +25,7 @@ public interface MaquinariaDao {
     List<Maquinaria> getById(@Bind("id") Integer id);
 
     @SqlCall(SQL_INSERT)
-    void insert(@BindBean("m") Maquinaria maquinaria);
+    void insert(@BindBean("m") Maquinaria maquinaria) throws UnableToExecuteStatementException;
 
     @SqlCall(SQL_UPDATE)
     void update(@BindBean("m") Maquinaria maquinaria);
